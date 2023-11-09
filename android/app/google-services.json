@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1009942221431",
+    "project_id": "broto-firebase-app",
+    "storage_bucket": "broto-firebase-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009942221431:android:1cf55f99480436dae0ac72",
+        "android_client_info": {
+          "package_name":"com.example.brototype_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU4FIU1Yg8lyJCancHVqgf7VgBVYjl-Cs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
