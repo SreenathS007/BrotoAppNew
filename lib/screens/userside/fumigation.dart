@@ -9,6 +9,7 @@ class FumgnPage extends StatefulWidget {
 }
 
 class _FumigationPageState extends State<FumgnPage> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _ageController = TextEditingController();
   TextEditingController _placeController = TextEditingController();
@@ -57,13 +58,84 @@ class _FumigationPageState extends State<FumgnPage> {
           title: Text(
             "Fumigation",
             style: GoogleFonts.poppins(
-                color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           backgroundColor: Colors.white,
         ),
-        body: Container(
-            // Your previous code here
+        body: SafeArea(
+          child: Center(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('fumigation')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text("Connection Error");
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text("Loading...");
+                }
+                var docs = snapshot.data?.docs;
+                if (docs != null) {
+                  return Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: ListView.builder(
+                        itemCount: docs.length,
+                        itemBuilder: (context, index) {
+                          var data = docs[index].data() as Map<String, dynamic>;
+                          return Container(
+                            margin: EdgeInsets.symmetric(vertical: 8.0),
+                            child: Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Location: ${data['Location']}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(height: 12.0),
+                                    Text(
+                                      "Batch Number: ${data['Batch Number']}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "Fumigation Date: ${data['Fumigation Date']}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "Description: ${data['Description']}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                } else {
+                  return Text("No data available");
+                }
+              },
             ),
+          ),
+        ),
         bottomNavigationBar: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: FloatingActionButton.extended(

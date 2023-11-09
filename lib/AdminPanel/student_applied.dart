@@ -14,6 +14,7 @@ class _StudentAppliedState extends State<StudentApplied> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: Text('Student Applied'),
       ),
       body: StreamBuilder<QuerySnapshot>(

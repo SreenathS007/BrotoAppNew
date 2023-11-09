@@ -168,11 +168,18 @@ class _AdminHomePageState extends State<admin_Dashboard> {
                       );
                     },
                   ),
-                  // itemDashboard(
-                  //   'Upload',
-                  //   CupertinoIcons.add_circled,
-                  //   Colors.green,
-                  // ),
+                  itemDashboard(
+                    'Upload',
+                    CupertinoIcons.add_circled,
+                    Colors.green,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => StudentApplied(),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

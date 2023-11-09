@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -9,10 +11,47 @@ class AddFumigation extends StatefulWidget {
 class _AddFumigationState extends State<AddFumigation> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _locationController = TextEditingController();
-  TextEditingController _typeController = TextEditingController();
+  TextEditingController _batchController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   DateFormat dateFormat = DateFormat("dd-MM-yyyy");
+//firebase storing the data
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  void addFumigation() async {
+    final fumLocation = _locationController.text;
+    final fumBatchNum = _batchController.text;
+    final fumDate = _dateController.text;
+    final fumDescription = _descriptionController.text;
+
+    if (fumLocation.isEmpty ||
+        fumBatchNum.isEmpty ||
+        fumDate.isEmpty ||
+        fumDescription.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Fill All the Fields Above'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    String? fumgationIds = firebaseAuth.currentUser?.uid;
+    FirebaseFirestore.instance.collection('fumigation').doc(fumgationIds).set({
+      "Location": fumLocation,
+      "Batch Number": fumBatchNum,
+      "Fumigation Date": fumDate,
+      "Description": fumDescription
+    });
+    _locationController.clear();
+    _batchController.clear();
+    _dateController.clear();
+    _descriptionController.clear();
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     DateTime? picked = await showDatePicker(
@@ -42,14 +81,14 @@ class _AddFumigationState extends State<AddFumigation> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Add a New Fumigation',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                // const Text(
+                //   'Add a New Fumigation',
+                //   style: TextStyle(
+                //     fontSize: 20.0,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                //   textAlign: TextAlign.center,
+                // ),
                 SizedBox(height: 16.0),
                 TextFormField(
                   validator: (value) {
@@ -58,7 +97,7 @@ class _AddFumigationState extends State<AddFumigation> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Location',
                   ),
@@ -76,11 +115,11 @@ class _AddFumigationState extends State<AddFumigation> {
                     return null;
                   },
                   maxLength: 6,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Batch Number',
                   ),
-                  controller: _typeController,
+                  controller: _batchController,
                   onChanged: (value) {
                     // Update the type value
                   },
@@ -92,7 +131,7 @@ class _AddFumigationState extends State<AddFumigation> {
                   },
                   child: AbsorbPointer(
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Date (dd-MM-yyyy)',
                       ),
@@ -114,7 +153,7 @@ class _AddFumigationState extends State<AddFumigation> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Description',
                   ),
@@ -134,6 +173,7 @@ class _AddFumigationState extends State<AddFumigation> {
                       // Add the fumigation logic
                       Navigator.of(context).pop();
                     }
+                    addFumigation();
                   },
                   child: Text('Add'),
                 ),

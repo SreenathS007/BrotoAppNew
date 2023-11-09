@@ -29,7 +29,14 @@ class _ScreenAddState extends State<ScreenAdd> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Add Student'),
-        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (ctx) => student_register()),
+            );
+          },
+        ),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 20),
