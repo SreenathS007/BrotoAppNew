@@ -90,35 +90,78 @@ class _FumigationPageState extends State<FumgnPage> {
                           return Container(
                             margin: EdgeInsets.symmetric(vertical: 8.0),
                             child: Card(
+                              color: Colors.lime[100],
                               elevation: 2,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
-                                padding: EdgeInsets.all(16.0),
+                                padding: EdgeInsets.all(30.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Location: ${data['Location']}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                    RichText(
+                                      text: TextSpan(
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                        children: [
+                                          const TextSpan(
+                                              text: "Location: ",
+                                              style: TextStyle(fontSize: 20)),
+                                          TextSpan(
+                                            text: "${data['Location']}",
+                                            style: const TextStyle(
+                                                color: Colors.green,
+                                                fontSize: 18.0),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     SizedBox(height: 12.0),
-                                    Text(
-                                      "Batch Number: ${data['Batch Number']}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                    RichText(
+                                      text: TextSpan(
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                        children: [
+                                          TextSpan(text: "Batch Number: "),
+                                          TextSpan(
+                                            text: "${data['Batch Number']}",
+                                            style:
+                                                TextStyle(color: Colors.purple),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Text(
-                                      "Fumigation Date: ${data['Fumigation Date']}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                    RichText(
+                                      text: TextSpan(
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                        children: [
+                                          TextSpan(text: "Fumigation Date: "),
+                                          TextSpan(
+                                            text: "${data['Fumigation Date']}",
+                                            style:
+                                                TextStyle(color: Colors.blue),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Text(
-                                      "Description: ${data['Description']}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                    RichText(
+                                      text: TextSpan(
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                        children: [
+                                          TextSpan(text: "Description: "),
+                                          TextSpan(
+                                            text: "${data['Description']}",
+                                            style: TextStyle(color: Colors.red),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
