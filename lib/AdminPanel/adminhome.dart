@@ -2,6 +2,8 @@ import 'package:brototype_app/AdminPanel/add_fumigation.dart';
 import 'package:brototype_app/AdminPanel/codingvideo/video_list.dart';
 import 'package:brototype_app/AdminPanel/student_applied.dart';
 import 'package:brototype_app/AdminPanel/studentregister/register.dart';
+import 'package:brototype_app/AdminPanel/successtories_upload.dart';
+import 'package:brototype_app/AdminPanel/upcoming_events.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:brototype_app/AdminPanel/adminlogin.dart';
@@ -169,13 +171,25 @@ class _AdminHomePageState extends State<admin_Dashboard> {
                     },
                   ),
                   itemDashboard(
-                    'Upload',
+                    'Upload Stories',
                     CupertinoIcons.add_circled,
                     Colors.green,
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => StudentApplied(),
+                          builder: (context) => SuccesStories_Add(),
+                        ),
+                      );
+                    },
+                  ),
+                  itemDashboard(
+                    'Upcoming Events',
+                    CupertinoIcons.bell,
+                    Colors.pink,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => UpcomingEvents(),
                         ),
                       );
                     },
