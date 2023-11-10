@@ -17,6 +17,7 @@ class _StudentAppliedState extends State<StudentApplied> {
         backgroundColor: Colors.black,
         title: Text('Student Applied'),
       ),
+      //firebase  operationssree@gmail.com
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('users').snapshots(),
         builder: (context, snapshot) {

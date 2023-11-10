@@ -229,7 +229,7 @@ class _AddFumigationState extends State<AddFumigation> {
                     }
                     return null;
                   },
-                  maxLength: 6,
+                  maxLength: 7,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Batch Number',
