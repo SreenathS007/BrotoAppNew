@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                     IconButton(
-                        onPressed: () => Get.to(() => const Updateprofile()),
+                        onPressed: () => Get.to(() => Updateprofile()),
                         icon: const Icon(Icons.edit))
                   ],
                 ),

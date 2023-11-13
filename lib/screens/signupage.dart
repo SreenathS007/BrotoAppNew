@@ -133,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Password is Required';
+                            return 'Phone Number Required';
                           } else {
                             return null;
                           }
@@ -238,40 +238,42 @@ class _SignUpPageState extends State<SignUpPage> {
     final CnfmPassword = _cnfmpasswordController.text;
 
 //adding to database
-    HiveDb db = HiveDb();
-    Box userBox = await Hive.openBox(db.userBoxKey);
+    if (formKey.currentState!.validate()) {
+      HiveDb db = HiveDb();
+      Box userBox = await Hive.openBox(db.userBoxKey);
 
-    UserdataModal? user = await userBox.get(Email);
+      UserdataModal? user = await userBox.get(Email);
 
-    if (userName.isNotEmpty &&
-        Email.isNotEmpty &&
-        Password.isNotEmpty &&
-        CnfmPassword.isNotEmpty) {
-      if (user != null) {
-        Get.snackbar('user exists', '');
+      if (userName.isNotEmpty &&
+          Email.isNotEmpty &&
+          Password.isNotEmpty &&
+          CnfmPassword.isNotEmpty) {
+        if (user != null) {
+          Get.snackbar('user exists', '');
+        } else {
+          UserdataModal model = UserdataModal(
+              username: userName,
+              email: Email,
+              phone: Password,
+              cnfmpassword: CnfmPassword);
+          userBox.put(Email, model);
+
+          final sharedprefs = await SharedPreferences.getInstance();
+          await sharedprefs.setString(emailkeyName, model.email);
+          await sharedprefs.setBool(savekeyName, true);
+
+          /////////
+          await userBox.close();
+          Get.to(() => bottomNavBar());
+        }
       } else {
-        UserdataModal model = UserdataModal(
-            username: userName,
-            email: Email,
-            phone: Password,
-            cnfmpassword: CnfmPassword);
-        userBox.put(Email, model);
-
-        final sharedprefs = await SharedPreferences.getInstance();
-        await sharedprefs.setString(emailkeyName, model.email);
-        await sharedprefs.setBool(savekeyName, true);
-
-        /////////
-        await userBox.close();
-        Get.to(() => bottomNavBar());
+        Get.snackbar("fill the Fields", '');
+        //}
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => bottomNavBar()),
+        // );
       }
-    } else {
-      Get.snackbar("fill the Fields", '');
-      //}
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => bottomNavBar()),
-      // );
     }
   }
 }

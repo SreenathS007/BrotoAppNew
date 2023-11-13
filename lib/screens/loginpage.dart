@@ -203,29 +203,29 @@ class _LoginScreenState extends State<LoginScreen> {
     // if (formKey.currentState!.validate()) {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
+    if (formKey.currentState!.validate()) {
+      HiveDb db = HiveDb();
+      Box userBox = await Hive.openBox(db.userBoxKey);
 
-    HiveDb db = HiveDb();
-    Box userBox = await Hive.openBox(db.userBoxKey);
+      UserdataModal? user = await userBox.get(email);
 
-    UserdataModal? user = await userBox.get(email);
+      if (user != null) {
+        print('logginn');
+        if (password == user.cnfmpassword) {
+          print("true");
+          Get.to(() => bottomNavBar());
 
-    if (user != null) {
-      print('logginn');
-      if (password == user.cnfmpassword) {
-        print("true");
-        Get.to(() => bottomNavBar());
+          final sharedprefs = await SharedPreferences.getInstance();
+          await sharedprefs.setString(emailkeyName, email);
 
-        final sharedprefs = await SharedPreferences.getInstance();
-        await sharedprefs.setString(emailkeyName, email);
-
-        await sharedprefs.setBool(savekeyName, true);
+          await sharedprefs.setBool(savekeyName, true);
+        }
+      } else {
+        print("Existing emails");
+        print(userBox.keys);
+        Get.snackbar('user not Exists', '');
       }
-    } else {
-      print("Existing emails");
-      print(userBox.keys);
-      Get.snackbar('user not Exists', '');
     }
-
     // Navigator.push(
     //   context,
     //   MaterialPageRoute(builder: (context) => bottomNavBar()),
