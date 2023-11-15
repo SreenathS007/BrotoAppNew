@@ -68,25 +68,55 @@ class _EventpageState extends State<Eventpage> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Event Name:${data['Event Name']}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
+                              RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                      color: Colors.black),
+                                  children: [
+                                    TextSpan(text: "Event Name: "),
+                                    TextSpan(
+                                      text: "${data['Event Name']}",
+                                      style: TextStyle(
+                                          fontSize: 18.0, color: Colors.red),
+                                    ),
+                                  ],
+                                ),
                               ),
                               SizedBox(height: 8.0),
-                              Text(
-                                "Event Venue: ${data['Event Venue']}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
+                              RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                      color: Colors.black),
+                                  children: [
+                                    TextSpan(text: "Event Venue: "),
+                                    TextSpan(
+                                      text: "${data['Event Venue']}",
+                                      style: TextStyle(
+                                          fontSize: 18.0, color: Colors.red),
+                                    ),
+                                  ],
+                                ),
                               ),
                               SizedBox(height: 8.0),
-                              Text(
-                                "Event Time: ${data['Event Time']}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
+                              RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                      color: Colors.black),
+                                  children: [
+                                    TextSpan(text: "Event Time: "),
+                                    TextSpan(
+                                      text: "${data['Event Time']}",
+                                      style: TextStyle(
+                                          fontSize: 18.0, color: Colors.red),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           );

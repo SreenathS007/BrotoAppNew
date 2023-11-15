@@ -26,7 +26,6 @@ class _NoteHomeState extends State<NoteHomePage> {
     Color.fromARGB(255, 185, 185, 97),
     Color.fromARGB(255, 209, 183, 176),
     Colors.blue,
-    Colors.red,
   ];
 
   @override
@@ -46,9 +45,15 @@ class _NoteHomeState extends State<NoteHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.edit_outlined,
-          color: Colors.black,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            // Navigate back to the home page
+            Navigator.pop(context);
+          },
         ),
         elevation: 2,
         centerTitle: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StoryPage extends StatelessWidget {
   const StoryPage({Key? key});
@@ -7,13 +8,32 @@ class StoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Success Stories'),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            // Navigate back to the home page
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: Colors.white,
+        title: Text(
+          'Success Stories',
+          style: GoogleFonts.poppins(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
       backgroundColor: Colors.grey[100],
       body: ListView(
         children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(20, 30, 20, 10),
+            padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

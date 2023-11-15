@@ -53,52 +53,70 @@ class _ShowVedioDetailsState extends State<ShowVedioDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blueGrey,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          title: const Text("Added Videos "),
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          label: const Text('Add Videos'),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return MyDialog();
-              },
-            );
-          },
-        ),
-        body: SafeArea(
-            child: ValueListenableBuilder<List<VideoModel>>(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: const Text("Added Videos "),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Add Videos'),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return MyDialog();
+            },
+          );
+        },
+      ),
+      body: SafeArea(
+        child: ValueListenableBuilder<List<VideoModel>>(
           valueListenable: videoListNotifier,
           builder: (context, videoList, child) {
-            return ListView.builder(
-              itemCount: videoList.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  color: Colors.grey[50],
-                  child: ListTile(
-                    title: Text(videoList[index].title),
-                    subtitle: Text(videoList[index].link),
-                    trailing: IconButton(
+            if (videoList.isEmpty) {
+              return Center(
+                child: Text(
+                  "Please Add Videos..!!!",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: videoList.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    color: Colors.grey[50],
+                    child: ListTile(
+                      title: Text(videoList[index].title),
+                      subtitle: Text(videoList[index].link),
+                      trailing: IconButton(
                         onPressed: () {
                           _showConfirmationDialog(videoList[index].id);
                         },
                         icon: const Icon(
                           Icons.delete,
                           color: Colors.red,
-                        )),
-                    onTap: () {
-                      _navigateToVideoPlayer(
-                          videoList[index].link, videoList[index].title);
-                    },
-                  ),
-                );
-              },
-            );
+                        ),
+                      ),
+                      onTap: () {
+                        _navigateToVideoPlayer(
+                          videoList[index].link,
+                          videoList[index].title,
+                        );
+                      },
+                    ),
+                  );
+                },
+              );
+            }
           },
-        )));
+        ),
+      ),
+    );
   }
 
   void _navigateToVideoPlayer(String videoLink, String title) {
@@ -120,7 +138,6 @@ class MyDialog extends StatefulWidget {
 class _MyDialogState extends State<MyDialog> {
   final formKey = GlobalKey<FormState>();
   TextEditingController linkController = TextEditingController();
-
   TextEditingController titleController = TextEditingController();
   @override
   Widget build(BuildContext context) {

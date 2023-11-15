@@ -34,9 +34,21 @@ class _CodinChllgeState extends State<CodinChllge> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            // Navigate back to the home page
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: Colors.white,
         title: const Text(
           "Coding Challenges",
           style: TextStyle(
+            color: Colors.black,
             fontSize: 25,
           ),
         ),
@@ -44,68 +56,78 @@ class _CodinChllgeState extends State<CodinChllge> {
       ),
       body: ValueListenableBuilder<List<VideoModel>>(
         valueListenable: videoListNotifier,
-        builder: (context, videoList, child) => ListView.builder(
-          itemCount: videoList.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => VideoPlayerScreen(
-                        videoLink: videoList[index].link,
-                        title: videoList[index].title),
-                  ));
-                },
-                child: Card(
-                  color: const Color.fromARGB(255, 19, 30, 36),
-                  elevation: 4,
-                  child: Row(
-                    children: [
-                      // Icon(
-                      //   Icons.playlist_play,
-                      //   color: Colors.white,
-                      //   size: 40,
-                      // ),
-                      Image.asset(
-                        imagePaths[index],
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                videoList[index].title,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                videoList[index].link,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+        builder: (context, videoList, child) {
+          if (videoList.isEmpty) {
+            return Center(
+              child: Text(
+                "No videos Added.!!",
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             );
-          },
-        ),
+          } else {
+            return ListView.builder(
+              itemCount: videoList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => VideoPlayerScreen(
+                            videoLink: videoList[index].link,
+                            title: videoList[index].title),
+                      ));
+                    },
+                    child: Card(
+                      color: const Color.fromARGB(255, 19, 30, 36),
+                      elevation: 4,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            imagePaths[index],
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    videoList[index].title,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    videoList[index].link,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }
