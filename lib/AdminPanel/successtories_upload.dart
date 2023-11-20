@@ -4,7 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class SuccesStories_Add extends StatefulWidget {
-  const SuccesStories_Add({super.key});
+  const SuccesStories_Add({Key? key}) : super(key: key);
 
   @override
   State<SuccesStories_Add> createState() => _SuccesStories_AddState();
@@ -13,22 +13,53 @@ class SuccesStories_Add extends StatefulWidget {
 class _SuccesStories_AddState extends State<SuccesStories_Add> {
   PlatformFile? pickedFile;
   UploadTask? uploadTask;
+
   Future uploadFile() async {
-    final path = 'files/${pickedFile!.name}';
-    final file = File(pickedFile!.path!);
+    try {
+      final path = 'files/${pickedFile!.name}';
+      final file = File(pickedFile!.path!);
 
-    final ref = FirebaseStorage.instance.ref().child(path);
-    setState(() {
-      uploadTask = ref.putFile(file);
-    });
+      final ref = FirebaseStorage.instance.ref().child(path);
+      setState(() {
+        uploadTask = ref.putFile(file);
+      });
 
-    final snapshot = await uploadTask!.whenComplete(() => {});
+      await uploadTask!.whenComplete(() => {});
 
-    final urlDownload = await snapshot.ref.getDownloadURL();
-    print('Download Link:$urlDownload');
-    setState(() {
-      uploadTask = null;
-    });
+      final urlDownload = await ref.getDownloadURL();
+      print('Download Link: $urlDownload');
+
+      // Show success dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text('Success'),
+          content: Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.green),
+              SizedBox(width: 8),
+              Text('Successfully added.'),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+
+      setState(() {
+        pickedFile = null;
+        uploadTask = null;
+      });
+    } catch (error) {
+      print('Error uploading file: $error');
+      // Handle error if needed
+    }
   }
 
   Future selectFile() async {
@@ -48,16 +79,34 @@ class _SuccesStories_AddState extends State<SuccesStories_Add> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (pickedFile != null)
-                Expanded(
-                  child: Container(
-                      color: Colors.blue[100],
-                      child: Image.file(
-                        File(pickedFile!.path!),
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      )),
+              Container(
+                height: 300,
+                width: 300,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue),
                 ),
+                child: pickedFile != null
+                    ? GestureDetector(
+                        onTap: selectFile,
+                        child: Image.file(
+                          File(pickedFile!.path!),
+                          width: double.infinity,
+                          height: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: selectFile,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.image, size: 50, color: Colors.blue),
+                            SizedBox(height: 8),
+                            Text("Upload Video"),
+                          ],
+                        ),
+                      ),
+              ),
               const SizedBox(height: 32),
               ElevatedButton(
                 child: const Text("Select File"),
@@ -68,38 +117,8 @@ class _SuccesStories_AddState extends State<SuccesStories_Add> {
                 child: const Text("Upload File"),
                 onPressed: uploadFile,
               ),
-              const SizedBox(height: 32),
-              buildProgress(),
             ],
           ),
         ),
       );
-
-  Widget buildProgress() => StreamBuilder<TaskSnapshot>(
-      stream: uploadTask?.snapshotEvents,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final data = snapshot.data!;
-          double progress = data.bytesTransferred / data.totalBytes;
-
-          return SizedBox(
-            height: 50,
-            child: Stack(fit: StackFit.expand, children: [
-              LinearProgressIndicator(
-                value: progress,
-                backgroundColor: Colors.grey,
-                color: Colors.green,
-              ),
-              Center(
-                child: Text(
-                  '${(100 * progress).roundToDouble()}%',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              )
-            ]),
-          );
-        } else {
-          return const SizedBox(height: 50);
-        }
-      });
 }

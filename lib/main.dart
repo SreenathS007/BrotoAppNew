@@ -73,10 +73,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(backgroundColor: Colors.white),
-        useMaterial3: true,
-      ),
       debugShowCheckedModeBanner: false,
       home: ScreenSplash(),
     );

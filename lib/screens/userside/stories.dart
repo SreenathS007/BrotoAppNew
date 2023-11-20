@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class StoryPage extends StatelessWidget {
-  const StoryPage({Key? key});
+  const StoryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
@@ -30,28 +31,27 @@ class StoryPage extends StatelessWidget {
         centerTitle: true,
       ),
       backgroundColor: Colors.grey[100],
-      body: ListView(
-        children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // No text or icons here
-              ],
-            ),
-          ),
-          GridView.count(
-            childAspectRatio: 0.68,
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics:
-                NeverScrollableScrollPhysics(), // Disable GridView scrolling
-            children: [
-              for (int i = 1; i <= 10; i++)
-                Container(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+      body: FutureBuilder<List<String>>(
+        // Fetch the list of download URLs
+        future: fetchDownloadURLs(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator(); // Show loading indicator while fetching data
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            List<String> downloadURLs = snapshot.data!;
+
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.68,
+              ),
+              itemCount: downloadURLs.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: const EdgeInsets.all(10), // Adjust padding as needed
+                  margin: const EdgeInsets.all(8), // Adjust margin as needed
                   decoration: BoxDecoration(
                     color: Colors.pink[50],
                     borderRadius: BorderRadius.circular(20),
@@ -60,18 +60,34 @@ class StoryPage extends StatelessWidget {
                     onTap: () {
                       // Add your onTap functionality here
                     },
-                    // child: Container(
-                    //   margin: const EdgeInsets.all(10),
-                    //   height: 120,
-                    //   width: 120,
-                    //   color: Colors.grey[300], // Placeholder color
-                    // ),
+                    child: Image.network(
+                      downloadURLs[index],
+                      fit: BoxFit.cover,
+                      height: double
+                          .infinity, // Make sure the image takes full height
+                      width: double
+                          .infinity, // Make sure the image takes full width
+                    ),
                   ),
-                ),
-            ],
-          ),
-        ],
+                );
+              },
+            );
+          }
+        },
       ),
     );
+  }
+
+  Future<List<String>> fetchDownloadURLs() async {
+    // Fetch download URLs from Firebase Storage
+    ListResult result = await FirebaseStorage.instance.ref('files').list();
+    List<String> downloadURLs = [];
+
+    for (Reference ref in result.items) {
+      String url = await ref.getDownloadURL();
+      downloadURLs.add(url);
+    }
+
+    return downloadURLs;
   }
 }
