@@ -72,7 +72,11 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(backgroundColor: Colors.white),
+        useMaterial3: true,
+      ),
       debugShowCheckedModeBanner: false,
       home: ScreenSplash(),
     );

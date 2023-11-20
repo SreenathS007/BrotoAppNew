@@ -17,14 +17,50 @@ class _FumigationPageState extends State<FumgnPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _educationController = TextEditingController();
 
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Success"),
+          content: Text("Student details successfully registered."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                _nameController.clear();
+                _ageController.clear();
+                _placeController.clear();
+                _mobileNumberController.clear();
+                _emailController.clear();
+                _educationController.clear();
+
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   FirebaseAuth auth = FirebaseAuth.instance;
   void savetask() async {
+    print("Saving task...");
     final clientName = _nameController.text;
     final clientAge = _ageController.text;
     final clientPlace = _placeController.text;
     final clientMobilenumber = _mobileNumberController.text;
     final clientEmail = _emailController.text;
     final clientEducation = _educationController.text;
+    if (_nameController.text.isEmpty ||
+        _ageController.text.isEmpty ||
+        _placeController.text.isEmpty ||
+        _mobileNumberController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _educationController.text.isEmpty) {
+      return;
+    }
 
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     String? userIds = firebaseAuth.currentUser?.uid;
@@ -36,6 +72,7 @@ class _FumigationPageState extends State<FumgnPage> {
       "Email": clientEmail,
       "Quallification": clientEducation
     });
+    _showSuccessDialog();
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -260,6 +297,8 @@ class _FumigationPageState extends State<FumgnPage> {
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
+                    maxLength: 10,
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Mobile Number',

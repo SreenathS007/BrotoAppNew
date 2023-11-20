@@ -27,7 +27,7 @@ class BanglrHub extends StatelessWidget {
             ),
 
             // Title Section
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
                 'Calicut Kinfra Hub',
