@@ -3,7 +3,6 @@ import 'package:brototype_app/custom_widgets/bottomNavbar.dart';
 import 'package:brototype_app/AdminPanel/adminlogin.dart';
 import 'package:brototype_app/database/functions/function/userFunctions/signup_function.dart';
 import 'package:brototype_app/database/functions/models/signup_model.dart';
-import 'package:brototype_app/home.dart';
 import 'package:brototype_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:brototype_app/screens/signupage.dart';
@@ -213,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
         print('logginn');
         if (password == user.cnfmpassword) {
           print("true");
-          Get.to(() => bottomNavBar());
+          Get.off(() => bottomNavBar());
 
           final sharedprefs = await SharedPreferences.getInstance();
           await sharedprefs.setString(emailkeyName, email);

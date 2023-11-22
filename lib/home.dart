@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           'Coding Challenges',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold),
                         ),
                       ],

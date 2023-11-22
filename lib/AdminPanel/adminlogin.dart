@@ -132,7 +132,7 @@ class _ScreenLoginState extends State<AdminLogin> {
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
-                  onPressed: () => Navigator.push(
+                  onPressed: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => LoginScreen(),

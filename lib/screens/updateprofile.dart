@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:brototype_app/custom_widgets/bottomNavbar.dart';
 import 'package:brototype_app/database/functions/function/userFunctions/signup_function.dart';
 import 'package:brototype_app/database/functions/models/signup_model.dart';
@@ -11,18 +10,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Updateprofile extends StatefulWidget {
-  const Updateprofile({super.key});
+  const Updateprofile({Key? key}) : super(key: key);
 
   @override
   State<Updateprofile> createState() => _UpdateprofileState();
 }
 
-final _emailController = TextEditingController();
-final _nameController = TextEditingController();
-final _ageController = TextEditingController();
-
 class _UpdateprofileState extends State<Updateprofile> {
+  final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _ageController = TextEditingController();
+
   late int selectedRadio;
+
   @override
   void initState() {
     selectedRadio = 0;
@@ -54,7 +54,9 @@ class _UpdateprofileState extends State<Updateprofile> {
                       child: Text(
                         'Edit Profile',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                   ],
@@ -64,25 +66,26 @@ class _UpdateprofileState extends State<Updateprofile> {
               GestureDetector(
                 onTap: () async => await getPhoto(),
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: ValueListenableBuilder(
-                      valueListenable: imgPath,
-                      builder: (BuildContext context, file, _) {
-                        return imgPath.value.isEmpty
-                            ? Image.asset(
-                                'assets/images/stdprofile.png',
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.file(
-                                File(file),
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              );
-                      },
-                    )),
+                  borderRadius: BorderRadius.circular(100),
+                  child: ValueListenableBuilder(
+                    valueListenable: imgPath,
+                    builder: (BuildContext context, file, _) {
+                      return imgPath.value.isEmpty
+                          ? Image.asset(
+                              'assets/images/stdprofile.png',
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.file(
+                              File(file),
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            );
+                    },
+                  ),
+                ),
               ),
               const SizedBox(height: 50),
               const Padding(
@@ -182,46 +185,48 @@ class _UpdateprofileState extends State<Updateprofile> {
               ),
               const SizedBox(height: 50),
               ElevatedButton(
-                  onPressed: () async {
-                    HiveDb db = HiveDb();
-                    Box userBox = await Hive.openBox(db.userBoxKey);
-                    final sharedPrefs = await SharedPreferences.getInstance();
-                    String? email = sharedPrefs.getString(emailkeyName);
-                    UserdataModal user = await userBox.get(email);
+                onPressed: () async {
+                  HiveDb db = HiveDb();
+                  Box userBox = await Hive.openBox(db.userBoxKey);
+                  final sharedPrefs = await SharedPreferences.getInstance();
+                  String? email = sharedPrefs.getString(emailkeyName);
+                  UserdataModal user = await userBox.get(email);
 
-                    // _nameController.text = user.name;
-                    // _emailController.text = user.email;
-                    // _ageController.text = user.age;
+                  user_name = _nameController.text;
+                  user_email = _emailController.text;
+                  user_password = _ageController.text;
+                  String user_imgPath =
+                      imgPath.value.isNotEmpty ? imgPath.value : '';
 
-                    user_name = _nameController.text;
-                    user_email = _emailController.text;
-                    user_password = _ageController.text;
-                    String user_imgPath =
-                        imgPath.value.isNotEmpty ? imgPath.value : '';
+                  print(_emailController.text);
+                  print(user_email);
 
-                    print(_emailController.text);
-                    print(user_email);
+                  // Update the user model
+                  UserdataModal newModel = UserdataModal(
+                    username: user_name,
+                    email: user_email,
+                    phone: user.phone,
+                    cnfmpassword: user.cnfmpassword,
+                    imgPath: user_imgPath,
+                  );
 
-                    // await userBox.put(email, user);
+                  // Save the new user model
+                  await userBox.put(email, newModel);
 
-                    UserdataModal newModel = UserdataModal(
-                      username: user_name,
-                      email: user_email,
-                      phone: user.phone,
-                      cnfmpassword: user.cnfmpassword,
-                      imgPath: user_imgPath,
-                    );
+                  // Save the profile image path separately
+                  String profileImageKey = email ?? "" + "_profile_image";
+                  Box imagePathBox = await Hive.openBox('imagePathBox');
+                  await imagePathBox.put(profileImageKey, user_imgPath);
 
-                    await userBox.delete(email);
-                    await userBox.put(user_email, newModel);
-                    await sharedPrefs.setString(emailkeyName, user_email);
+                  await sharedPrefs.setString(emailkeyName, user_email);
 
-                    _emailController.clear();
-                    _nameController.clear();
-                    _ageController.clear();
-                    Get.to(() => const bottomNavBar());
-                  },
-                  child: const Text('UPDATE')),
+                  _emailController.clear();
+                  _nameController.clear();
+                  _ageController.clear();
+                  Get.to(() => const bottomNavBar());
+                },
+                child: const Text('UPDATE'),
+              ),
             ],
           ),
         ),
@@ -243,10 +248,16 @@ class _UpdateprofileState extends State<Updateprofile> {
     user_name = _nameController.text;
     user_email = _emailController.text;
     user_password = _ageController.text;
+
+    // Load profile image information
+    String profileImageKey = email ?? "" + "_profile_image";
+    Box imagePathBox = await Hive.openBox('imagePathBox');
+    imgPath.value = imagePathBox.get(profileImageKey) ?? '';
+    imgPath.notifyListeners();
   }
 
   final picker = ImagePicker();
-//Image Picker function to get image from gallery
+
   Future getPhoto() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 

@@ -4,6 +4,7 @@ import 'package:brototype_app/home.dart';
 import 'package:brototype_app/main.dart';
 import 'package:brototype_app/screens/profile.dart';
 import 'package:brototype_app/screens/search_bar.dart';
+import 'package:brototype_app/screens/userside/stories.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -25,7 +26,7 @@ class _bottomNavBarState extends State<bottomNavBar> {
   List<Widget> bottomList = [
     const HomeScreen(),
     const search_Bar(),
-    const ProfilePage(),
+    const StoryPage(),
     const ProfilePage(),
   ];
   getUserDatas() async {

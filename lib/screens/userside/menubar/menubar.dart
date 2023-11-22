@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:brototype_app/main.dart';
 import 'package:brototype_app/screens/faqs.dart';
 import 'package:brototype_app/screens/updateprofile.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,7 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   late String userName;
   late String userEmail;
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +34,7 @@ class _NavBarState extends State<NavBar> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.white,
@@ -41,10 +45,25 @@ class _NavBarState extends State<NavBar> {
             accountName: Text(widget.userName),
             accountEmail: Text(widget.userEmail),
             currentAccountPicture: CircleAvatar(
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/avatar.png',
-                  fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: ValueListenableBuilder(
+                  valueListenable: imgPath,
+                  builder: (BuildContext context, file, _) {
+                    return imgPath.value.isEmpty
+                        ? Image.asset(
+                            'assets/images/stdprofile.png',
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.file(
+                            File(file),
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          );
+                  },
                 ),
               ),
             ),

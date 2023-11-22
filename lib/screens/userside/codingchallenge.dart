@@ -3,19 +3,6 @@ import 'package:brototype_app/database/functions/function/adminFunctions/videoAd
 import 'package:brototype_app/database/functions/models/adminmodel/video_add_model.dart';
 import 'package:flutter/material.dart';
 
-List<String> imagePaths = [
-  'assets/images/cdg1.jpg',
-  'assets/images/cdg2.jpg',
-  'assets/images/cdg3.jpg',
-  'assets/images/cdg4.jpg',
-  'assets/images/cdg5.jpg',
-  'assets/images/cdg6.jpg',
-  'assets/images/cdg7.jpg',
-  'assets/images/cdg8.jpg',
-  'assets/images/cdg9.jpg',
-  'assets/images/cdg10.jpg',
-];
-
 class CodinChllge extends StatefulWidget {
   const CodinChllge({super.key});
 
@@ -88,7 +75,7 @@ class _CodinChllgeState extends State<CodinChllge> {
                       child: Row(
                         children: [
                           Image.asset(
-                            imagePaths[index],
+                            'assets/images/tumbnail.webp', // Use the same thumbnail image for all videos
                             height: 50,
                             fit: BoxFit.cover,
                           ),
