@@ -73,11 +73,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ScreenSplash(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        home: ScreenSplash(),
+        theme: ThemeData(
+          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          useMaterial3: false,
+        ));
   }
 }

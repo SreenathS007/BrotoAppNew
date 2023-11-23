@@ -9,6 +9,7 @@ class CalicutHub extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Calicut Hub',
+          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black,
       ),

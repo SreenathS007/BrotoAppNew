@@ -7,7 +7,10 @@ class KochiHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Koch Hub'),
+        title: Text(
+          'Kochi Hub',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(

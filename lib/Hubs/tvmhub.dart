@@ -7,7 +7,10 @@ class TvmHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Trivandrum Hub'),
+        title: Text(
+          'Trivandrum Hub',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(

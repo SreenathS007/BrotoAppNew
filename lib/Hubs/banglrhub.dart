@@ -6,7 +6,10 @@ class BanglrHub extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bangalore Hub'),
+        title: const Text(
+          'Bangalore Hub',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(
