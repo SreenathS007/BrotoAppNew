@@ -84,7 +84,7 @@ class _SuccessStoriesAddState extends State<SuccesStories_Add> {
         return;
       }
 
-      final path = 'images/${pickedFile!.name}';
+      final path = 'files/${pickedFile!.name}';
       final file = File(pickedFile!.path!);
 
       final ref = FirebaseStorage.instance.ref().child(path);

@@ -4,6 +4,7 @@ import 'package:brototype_app/screens/faqs.dart';
 import 'package:brototype_app/screens/updateprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:brototype_app/screens/loginpage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NavBar extends StatefulWidget {
   final String userName;
@@ -98,17 +99,28 @@ class _NavBarState extends State<NavBar> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('LogOut'),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LoginScreen(),
+              leading: Icon(Icons.logout),
+              title: Text('LogOut'),
+              onTap: () {
+                signout(context);
+              }
+              // => Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => LoginScreen(),
+              //   ),
+              // ),
               ),
-            ),
-          ),
         ],
       ),
     );
+  }
+
+  signout(BuildContext ctx) async {
+    final _sharedPrefs = await SharedPreferences.getInstance();
+    await _sharedPrefs.clear();
+
+    Navigator.of(ctx).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (ctx1) => LoginScreen()), (route) => false);
   }
 }

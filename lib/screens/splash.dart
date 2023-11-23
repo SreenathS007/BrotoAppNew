@@ -1,9 +1,13 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:brototype_app/AdminPanel/adminlogin.dart';
+import 'package:brototype_app/custom_widgets/bottomNavbar.dart';
+import 'package:brototype_app/main.dart';
+import 'package:brototype_app/screens/loginpage.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenSplash extends StatefulWidget {
-  const ScreenSplash({super.key});
+  const ScreenSplash({Key? key}) : super(key: key);
 
   @override
   State<ScreenSplash> createState() => _ScreenSplashState();
@@ -12,16 +16,16 @@ class ScreenSplash extends StatefulWidget {
 class _ScreenSplashState extends State<ScreenSplash> {
   @override
   void initState() {
+    CheckUserLogedIn();
     super.initState();
-    Timer(Duration(seconds: 4), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => AdminLogin(),
-        ),
-      );
-    });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -41,5 +45,35 @@ class _ScreenSplashState extends State<ScreenSplash> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<void> GotoLogin() async {
+    await Future.delayed(Duration(seconds: 3));
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (ctx) => LoginScreen(),
+      ),
+    );
+  }
+
+  Future<void> CheckUserLogedIn() async {
+    final _sharedPrefs = await SharedPreferences.getInstance();
+
+    final _userLogedIn = _sharedPrefs.getBool(savekeyName);
+
+    if (_userLogedIn == null || _userLogedIn == false) {
+      GotoLogin();
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (ctx1) => bottomNavBar(),
+        ),
+      );
+    }
   }
 }

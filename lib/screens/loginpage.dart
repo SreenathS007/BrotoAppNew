@@ -21,6 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
+  bool _isDataMatched = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +119,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        login();
+                        if (formKey.currentState!.validate()) {
+                          CheckLogin(context);
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -198,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> login() async {
+  Future<void> CheckLogin(BuildContext ctx) async {
     // if (formKey.currentState!.validate()) {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
@@ -225,10 +230,5 @@ class _LoginScreenState extends State<LoginScreen> {
         Get.snackbar('user not Exists', '');
       }
     }
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => bottomNavBar()),
-    // );
-    // }
   }
 }
