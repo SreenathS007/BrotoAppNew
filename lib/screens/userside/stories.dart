@@ -14,7 +14,6 @@ class StoryPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.black,
           ),
           onPressed: () {
             // Navigate back to the home page
@@ -25,7 +24,7 @@ class StoryPage extends StatelessWidget {
         title: Text(
           'Success Stories',
           style: GoogleFonts.poppins(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),

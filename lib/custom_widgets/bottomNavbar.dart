@@ -25,7 +25,7 @@ class _bottomNavBarState extends State<bottomNavBar> {
   int _currentIndex = 0;
   List<Widget> bottomList = [
     const HomeScreen(),
-    const SearchBar(),
+    const search_Bar(),
     const StoryPage(),
     const ProfilePage(),
   ];
