@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:brototype_app/main.dart';
-import 'package:brototype_app/screens/faqs.dart';
+import 'package:brototype_app/screens/userside/menubar/faqs.dart';
 import 'package:brototype_app/screens/updateprofile.dart';
+import 'package:brototype_app/screens/userside/menubar/privacypolicy.dart';
 import 'package:flutter/material.dart';
 import 'package:brototype_app/screens/loginpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -95,6 +96,16 @@ class _NavBarState extends State<NavBar> {
               context,
               MaterialPageRoute(
                 builder: (context) => FAQsPage(),
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.privacy_tip),
+            title: Text('Privacy & Policy'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PrivacyPolicy(),
               ),
             ),
           ),
