@@ -46,13 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         elevation: 0.00,
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: GestureDetector(
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CodinChllge(),
+            builder: (context) => const CodinChllge(),
           ),
         ),
         child: Container(

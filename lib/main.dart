@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ScreenSplash(),
+        home: const ScreenSplash(),
         theme: ThemeData(
           // colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: false,

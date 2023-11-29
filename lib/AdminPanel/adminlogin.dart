@@ -2,7 +2,6 @@ import 'package:brototype_app/screens/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:brototype_app/AdminPanel/adminhome.dart';
-import 'package:hive/hive.dart';
 
 const String SAVE_KEY_NAME = 'your_key_name';
 
@@ -154,7 +153,7 @@ class _ScreenLoginState extends State<AdminLogin> {
   void CheckLogin(BuildContext ctx) async {
     final _username = _usernameController.text;
     final _password = _passwordController.text;
-    if (_username == 'admin' && _password == 'admin') {
+    if (_username.isNotEmpty && _password.isNotEmpty) {
       //Goto Home
 
       final _sharedPrefs = await SharedPreferences.getInstance();
