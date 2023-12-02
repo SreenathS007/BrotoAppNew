@@ -73,7 +73,7 @@ class _AdminHomePageState extends State<admin_Dashboard> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
-                    "Brototype",
+                    "BroLearn",
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
@@ -81,7 +81,7 @@ class _AdminHomePageState extends State<admin_Dashboard> {
                   ),
                   leading: const CircleAvatar(
                     radius: 29,
-                    backgroundImage: AssetImage("assets/images/FAQsIcon.jpg"),
+                    backgroundImage: AssetImage("assets/images/FAQsIcon.png"),
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.exit_to_app),

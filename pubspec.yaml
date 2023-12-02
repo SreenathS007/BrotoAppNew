@@ -85,7 +85,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/icon.jpg"
+  image_path: "assets/icon/icon.jpeg"
   min_sdk_android: 21
 
 # For information on the generic Dart part of this file, see the
@@ -101,7 +101,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets\images\brotoLogo.webp
+     - assets\images\SPlashIcon.png
      - assets\images\sp.jpg
      - assets\images\logimg.png   
      - assets\images\avatar.png      
@@ -117,7 +117,7 @@ flutter:
      - assets\images\events.jpg
      - assets\images\success.jpg 
      - assets\images\keepNotes.png    
-     - assets\images\FAQsIcon.jpg  
+     - assets\images\FAQsIcon.png  
      - assets/images/wtsppBGnd.jpg
      - assets\images\CalicutHub.jpg
      - assets\images\KochiHub.png

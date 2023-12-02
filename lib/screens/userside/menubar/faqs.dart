@@ -30,7 +30,7 @@ class FAQsPage extends StatelessWidget {
                 const ClipOval(
                   child: CircleAvatar(
                     radius: 25,
-                    backgroundImage: AssetImage('assets/images/FAQsIcon.jpg'),
+                    backgroundImage: AssetImage('assets/images/FAQsIcon.png'),
                   ),
                 ),
                 Padding(
@@ -39,7 +39,7 @@ class FAQsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Brototype FAQS',
+                        'BroLearn FAQS',
                         style: TextStyle(fontSize: 19),
                       ),
                       const SizedBox(height: 5),
@@ -103,9 +103,8 @@ class ChatSample extends StatelessWidget {
       "Submit an online application on this website.📧",
       "How do I prepare for the Brocamp interview?",
       "Brocamp interview consists of very basic programming questions and few general questions about yourself",
-       "Can I apply again if I failed the interview?",
-        "Yes, you can apply till you get qualified😀.",
-       
+      "Can I apply again if I failed the interview?",
+      "Yes, you can apply till you get qualified😀.",
     ];
 
     return Column(

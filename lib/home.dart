@@ -7,6 +7,7 @@ import 'package:brototype_app/screens/userside/hubs.dart';
 import 'package:brototype_app/screens/userside/fumigation.dart';
 import 'package:brototype_app/screens/userside/stories.dart';
 import 'package:brototype_app/screens/userside/events.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,13 +28,21 @@ class _HomeScreenState extends State<HomeScreen> {
         userEmail: user_email,
       ),
       appBar: AppBar(
-        title: const Text(
-          'Brototype',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: RichText(
+            text: TextSpan(children: [
+          TextSpan(
+              text: "Bro",
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold)),
+          TextSpan(
+              text: "Learn",
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w400))
+        ])),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,

@@ -37,7 +37,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
           ),
           Center(
             child: Image.asset(
-              'assets/images/brotoLogo.webp',
+              'assets/images/SPlashIcon.png',
               height: 300,
               width: 300,
             ),
