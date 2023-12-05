@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:brototype_app/AdminPanel/studentregister/sdtudent_profile.dart';
 import 'package:brototype_app/database/functions/function/adminFunctions/register_std_function.dart';
 import 'package:brototype_app/database/functions/models/adminmodel/register_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ListStudent extends StatefulWidget {
